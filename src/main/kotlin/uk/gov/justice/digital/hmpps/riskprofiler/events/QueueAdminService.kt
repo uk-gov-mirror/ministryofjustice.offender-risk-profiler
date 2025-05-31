@@ -24,7 +24,8 @@ class QueueAdminService(
   }
 
   enum class TelemetryEvents {
-    PURGED_EVENT_DLQ, TRANSFERRED_EVENT_DLQ
+    PURGED_EVENT_DLQ,
+    TRANSFERRED_EVENT_DLQ,
   }
 
   private val eventQueueUrl: String by lazy { eventAwsSqsClient.getQueueUrl(eventQueueName).queueUrl }

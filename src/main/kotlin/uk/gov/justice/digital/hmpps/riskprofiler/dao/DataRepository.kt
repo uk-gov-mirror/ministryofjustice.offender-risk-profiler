@@ -4,7 +4,6 @@ import org.slf4j.LoggerFactory
 import uk.gov.justice.digital.hmpps.riskprofiler.datasourcemodel.RiskDataSet
 import java.time.LocalDateTime
 import java.util.Optional
-import java.util.Optional.empty
 import java.util.Optional.ofNullable
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.regex.Pattern
@@ -26,7 +25,7 @@ abstract class DataRepository<F : RiskDataSet> {
     csvData: List<List<String>>,
     filename: String,
     timestamp: LocalDateTime,
-    data: ImportedFile<F>
+    data: ImportedFile<F>,
   )
 
   open fun getByKey(key: String?): Optional<F> {

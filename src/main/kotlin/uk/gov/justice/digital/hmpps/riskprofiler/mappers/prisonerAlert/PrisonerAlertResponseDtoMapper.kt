@@ -11,7 +11,7 @@ class PrisonerAlertResponseDtoMapper {
         prisonerAlertResponseDto.createdAt,
         prisonerAlertResponseDto.activeFrom,
         prisonerAlertResponseDto.activeTo,
-        prisonerAlertResponseDto.active
+        prisonerAlertResponseDto.active,
       )
     }
 

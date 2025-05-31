@@ -1,5 +1,5 @@
 plugins {
-  id("uk.gov.justice.hmpps.gradle-spring-boot") version "5.15.3"
+  id("uk.gov.justice.hmpps.gradle-spring-boot") version "6.1.2"
   kotlin("plugin.spring") version "1.9.22"
   kotlin("plugin.jpa") version "1.9.22"
 }
@@ -13,6 +13,12 @@ configurations {
     exclude(group = "ch.qos.logback", module = "logback-classic")
   }
   testImplementation { exclude(group = "org.junit.vintage") }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("commons-beanutils:commons-beanutils:1.11.0")
+  }
 }
 
 dependencyCheck {
@@ -44,7 +50,7 @@ dependencies {
 
   // NOTE spring-boot-devtools does not currently play nicely with spring-data-redis,
   // see https://github.com/spring-projects/spring-boot/issues/11822, which claims to be fixed but is not.
-  //implementation("org.springframework.data:spring-data-redis")
+  // implementation("org.springframework.data:spring-data-redis")
   // Note spring-data-redis 2.6.2 does not support Jedis 4.x
   implementation("redis.clients:jedis:5.2.0")
 
@@ -62,7 +68,7 @@ dependencies {
 
   implementation("io.jsonwebtoken:jjwt:0.12.3")
 
-  implementation("com.opencsv:opencsv:5.9")
+  implementation("com.opencsv:opencsv:5.10")
   implementation("commons-io:commons-io:2.16.1")
 
   implementation("org.apache.commons:commons-lang3:3.14.0")
@@ -84,9 +90,9 @@ dependencies {
 
   testImplementation("junit:junit:4.13.2")
   testImplementation("io.github.http-builder-ng:http-builder-ng-apache:1.0.4")
-  testImplementation("org.testcontainers:localstack:1.17.6")
+  testImplementation("org.testcontainers:localstack:1.20.6")
   testImplementation("com.github.tomakehurst:wiremock-standalone:2.27.2")
-  testImplementation("com.google.code.gson:gson:2.10.1")
+  testImplementation("com.google.code.gson:gson:2.11.0")
   testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
   testImplementation("org.awaitility:awaitility-kotlin:4.2.0")
 }

@@ -12,7 +12,6 @@ import com.google.gson.stream.JsonWriter
 import uk.gov.justice.digital.hmpps.riskprofiler.factories.dto.prisonerAlert.TestPrisonerAlertCodeSummaryDtoFactory
 import uk.gov.justice.digital.hmpps.riskprofiler.factories.dto.prisonerAlert.TestPrisonerAlertResponseDtoFactory
 import uk.gov.justice.digital.hmpps.riskprofiler.integration.wiremock.MockUtility.Companion.getJsonString
-import uk.gov.justice.digital.hmpps.riskprofiler.model.Alert
 import uk.gov.justice.digital.hmpps.riskprofiler.model.RestPage
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -238,10 +237,11 @@ class PrisonerAlertsApiMockServer : WireMockServer(8084) {
   fun stubAlerts() {
     val recent = LocalDate.of(2021, 6, 14)
     val alert1 = (TestPrisonerAlertResponseDtoFactory())
-      .withAlertCodeSummary((TestPrisonerAlertCodeSummaryDtoFactory())
-        .withAlertCode("DUM")
-        .withAlertDescription("desc")
-        .build()
+      .withAlertCodeSummary(
+        (TestPrisonerAlertCodeSummaryDtoFactory())
+          .withAlertCode("DUM")
+          .withAlertDescription("desc")
+          .build(),
       )
       .withActive(true)
       .withCreatedAt(recent)
@@ -249,10 +249,11 @@ class PrisonerAlertsApiMockServer : WireMockServer(8084) {
       .build()
 
     val alert2 = (TestPrisonerAlertResponseDtoFactory())
-      .withAlertCodeSummary((TestPrisonerAlertCodeSummaryDtoFactory())
-        .withAlertCode("DUM")
-        .withAlertDescription("desc")
-        .build()
+      .withAlertCodeSummary(
+        (TestPrisonerAlertCodeSummaryDtoFactory())
+          .withAlertCode("DUM")
+          .withAlertDescription("desc")
+          .build(),
       )
       .withActive(true)
       .withCreatedAt(recent)

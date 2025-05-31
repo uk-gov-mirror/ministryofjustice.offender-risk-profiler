@@ -8,7 +8,6 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.amazonaws.services.sqs.AmazonSQS
 import com.amazonaws.services.sqs.AmazonSQSAsync
 import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder
-import com.amazonaws.services.sqs.AmazonSQSClientBuilder
 import com.amazonaws.services.sqs.model.CreateQueueRequest
 import com.amazonaws.services.sqs.model.QueueAttributeName
 import org.slf4j.Logger
@@ -54,7 +53,7 @@ open class EmbeddedLocalStackConfig {
         .withEnv("AWS_SECRET_ACCESS_KEY", "bar")
         .withEnv("AWS_DEFAULT_REGION", "eu-west-2")
         .waitingFor(
-          Wait.forLogMessage(".*All Ready.*", 1).withStartupTimeout(Duration.ofMinutes(10))
+          Wait.forLogMessage(".*All Ready.*", 1).withStartupTimeout(Duration.ofMinutes(10)),
         )
 
     log.info("Started localstack.")

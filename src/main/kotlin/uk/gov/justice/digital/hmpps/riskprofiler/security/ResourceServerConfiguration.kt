@@ -22,13 +22,15 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.info.BuildProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
-import javax.sql.DataSource
+import org.springframework.transaction.PlatformTransactionManager
+import java.sql.Connection
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
@@ -69,7 +71,6 @@ class ResourceServerConfiguration {
 
   @Bean
   fun api(): OpenAPI {
-
     return OpenAPI()
       .components(
         Components().addSecuritySchemes(
@@ -79,8 +80,8 @@ class ResourceServerConfiguration {
             .scheme("bearer")
             .bearerFormat("JWT")
             .`in`(SecurityScheme.In.HEADER)
-            .name("Authorization")
-        )
+            .name("Authorization"),
+        ),
       )
       .info(
         Info().title("Offender Risk Profiler API Documentation")
@@ -89,9 +90,9 @@ class ResourceServerConfiguration {
           .license(
             License()
               .name("Open Government Licence v3.0")
-              .url("https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/")
+              .url("https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"),
           )
-          .contact(Contact().name("HMPPS Digital Studio").email("dps-hmpps@digital.justice.gov.uk"))
+          .contact(Contact().name("HMPPS Digital Studio").email("dps-hmpps@digital.justice.gov.uk")),
       )
       .addSecurityItem(SecurityRequirement().addList("bearer-jwt", listOf("read", "write")))
   }
@@ -105,7 +106,7 @@ class ResourceServerConfiguration {
   @Bean
   @ConditionalOnProperty(name = ["s3.provider"], havingValue = "aws")
   fun s3Client(
-    @Value("\${s3.endpoint.region}") region: String?
+    @Value("\${s3.endpoint.region}") region: String?,
   ): AmazonS3 {
     return AmazonS3ClientBuilder.standard()
       .withRegion(region)
@@ -129,7 +130,15 @@ class ResourceServerConfiguration {
   }
 
   @Bean
-  fun lockProvider(dataSource: DataSource): LockProvider {
-    return JdbcTemplateLockProvider(dataSource)
+  fun lockProvider(jdbcTemplate: JdbcTemplate, platformTransactionManager: PlatformTransactionManager): LockProvider {
+    return JdbcTemplateLockProvider(
+      JdbcTemplateLockProvider.Configuration.builder()
+        .withTableName("shedlock")
+        .withJdbcTemplate(jdbcTemplate)
+        .withTransactionManager(platformTransactionManager)
+        .withIsolationLevel(Connection.TRANSACTION_SERIALIZABLE)
+        .usingDbTime()
+        .build(),
+    )
   }
 }

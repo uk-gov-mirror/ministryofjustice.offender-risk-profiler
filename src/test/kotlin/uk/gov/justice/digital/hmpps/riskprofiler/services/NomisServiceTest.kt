@@ -46,22 +46,22 @@ class NomisServiceTest {
         .withActive(false)
         .withActiveTo(LocalDate.now().minusMonths(1))
         .withAlertCodeSummary((TestPrisonerAlertCodeSummaryDtoFactory()).withAlertCode("SOC").build())
-        .build()
+        .build(),
     )
     Mockito.`when`(
       prisonerAlertsApiClient.findPrisonerAlerts(
         "A1234AA",
-        listOf("SOC")
+        listOf("SOC"),
       ),
     )
       .thenReturn(
-        RestPage(testAlertsResponse, 1, testAlertsResponse.size, 1)
+        RestPage(testAlertsResponse, 1, testAlertsResponse.size, 1),
       )
     val alertsForOffender = service.getAlertsForOffender("A1234AA", listOf("SOC"))
     Assertions.assertThat(alertsForOffender).hasSize(1)
     Mockito.verify(prisonerAlertsApiClient).findPrisonerAlerts(
       "A1234AA",
-      listOf("SOC")
+      listOf("SOC"),
     )
     Mockito.verifyNoMoreInteractions(prisonerAlertsApiClient)
   }
@@ -122,25 +122,25 @@ class NomisServiceTest {
   @Throws(Exception::class)
   fun testEscapeListCall() {
     val testEscapeRiskAlertsResponse = (TestPrisonerAlertResponseDtoFactory())
-        .withActive(false)
-        .withActiveTo(LocalDate.now().minusMonths(1))
-        .withAlertCodeSummary((TestPrisonerAlertCodeSummaryDtoFactory()).withAlertCode(PrisonerAlertCodeSummaryDto.ALERT_CODE_ESCAPE_RISK).build())
-        .build()
+      .withActive(false)
+      .withActiveTo(LocalDate.now().minusMonths(1))
+      .withAlertCodeSummary((TestPrisonerAlertCodeSummaryDtoFactory()).withAlertCode(PrisonerAlertCodeSummaryDto.ALERT_CODE_ESCAPE_RISK).build())
+      .build()
     val testEscapeListAlertsResponse = (TestPrisonerAlertResponseDtoFactory())
-        .withActive(false)
-        .withActiveTo(LocalDate.now().minusMonths(1))
-        .withAlertCodeSummary((TestPrisonerAlertCodeSummaryDtoFactory()).withAlertCode(PrisonerAlertCodeSummaryDto.ALERT_CODE_ESCAPE_LIST).build())
-        .build()
+      .withActive(false)
+      .withActiveTo(LocalDate.now().minusMonths(1))
+      .withAlertCodeSummary((TestPrisonerAlertCodeSummaryDtoFactory()).withAlertCode(PrisonerAlertCodeSummaryDto.ALERT_CODE_ESCAPE_LIST).build())
+      .build()
     val testAlertsResponse = listOf(testEscapeRiskAlertsResponse, testEscapeListAlertsResponse)
 
     Mockito.`when`(
       prisonerAlertsApiClient.findPrisonerAlerts(
         "A1234AA",
-        listOf(PrisonerAlertCodeSummaryDto.ALERT_CODE_ESCAPE_RISK, PrisonerAlertCodeSummaryDto.ALERT_CODE_ESCAPE_LIST)
+        listOf(PrisonerAlertCodeSummaryDto.ALERT_CODE_ESCAPE_RISK, PrisonerAlertCodeSummaryDto.ALERT_CODE_ESCAPE_LIST),
       ),
     )
       .thenReturn(
-        RestPage(testAlertsResponse, 1, testAlertsResponse.size, 2)
+        RestPage(testAlertsResponse, 1, testAlertsResponse.size, 2),
       )
 
     val alertsForOffender = service.getEscapeListAlertsForOffender("A1234AA")

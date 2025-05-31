@@ -12,6 +12,8 @@ import uk.gov.justice.digital.hmpps.riskprofiler.integration.wiremock.PrisonerAl
 
 class RiskProfilerResourceTest : ResourceTest() {
 
+  private val RISK_PROFILER_ROLE = listOf("ROLE_RISK_PROFILER")
+
   @BeforeEach
   fun init() {
     OAuthMockServer.oauthMockServer.stubGrantToken()
@@ -180,9 +182,5 @@ class RiskProfilerResourceTest : ResourceTest() {
       },
     )
     assertThatStatus(response, 403)
-  }
-
-  companion object {
-    private val RISK_PROFILER_ROLE = listOf("ROLE_RISK_PROFILER")
   }
 }

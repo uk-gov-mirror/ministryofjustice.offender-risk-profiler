@@ -20,7 +20,7 @@ class TestPrisonerAlertCodeSummaryDtoFactory {
   fun build(): PrisonerAlertCodeSummaryDto {
     return PrisonerAlertCodeSummaryDto(
       this.alertCode,
-      this.alertDescription
+      this.alertDescription,
     )
   }
 }
