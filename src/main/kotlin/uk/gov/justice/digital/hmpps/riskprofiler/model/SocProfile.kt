@@ -1,8 +1,8 @@
 package uk.gov.justice.digital.hmpps.riskprofiler.model
 
 import io.swagger.v3.oas.annotations.media.Schema
-import org.apache.commons.lang3.builder.CompareToBuilder
 import jakarta.validation.constraints.NotBlank
+import org.apache.commons.lang3.builder.CompareToBuilder
 
 data class SocProfile(
   val nomsId: @NotBlank String,

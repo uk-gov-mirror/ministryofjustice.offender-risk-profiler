@@ -39,7 +39,7 @@ class TestAlertFactory {
       this.dateCreated,
       this.activeFrom,
       this.dateExpires,
-      this.active
+      this.active,
     )
   }
 }

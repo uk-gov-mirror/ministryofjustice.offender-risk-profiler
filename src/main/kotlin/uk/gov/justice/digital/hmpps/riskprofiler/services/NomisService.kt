@@ -47,8 +47,8 @@ class NomisService(
   fun getAlertsForOffender(nomsId: String, alertCodeList: List<String>): List<Alert> {
     return PrisonerAlertResponseDtoMapper.mapAllToAlerts(
       prisonerAlertsApiClient
-      .findPrisonerAlerts(nomsId, alertCodeList)
-      .content
+        .findPrisonerAlerts(nomsId, alertCodeList)
+        .content,
     )
   }
 

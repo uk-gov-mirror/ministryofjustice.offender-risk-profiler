@@ -1,5 +1,5 @@
 plugins {
-  id("uk.gov.justice.hmpps.gradle-spring-boot") version "5.15.3"
+  id("uk.gov.justice.hmpps.gradle-spring-boot") version "5.15.6"
   kotlin("plugin.spring") version "1.9.22"
   kotlin("plugin.jpa") version "1.9.22"
 }
@@ -15,6 +15,61 @@ configurations {
   testImplementation { exclude(group = "org.junit.vintage") }
 }
 
+configurations.all {
+  resolutionStrategy {
+    force("commons-beanutils:commons-beanutils:1.11.0")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.apache.tomcat.embed:tomcat-embed-core:11.0.3")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.springframework.boot:spring-boot:3.4.5")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.springframework.security:spring-security-core:6.2.3")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.springframework.security:spring-security-crypto:6.4.4")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.springframework.security:spring-security-web:6.2.7")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.springframework:spring-web:6.1.6")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.springframework:spring-webflux:6.1.14")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.springframework:spring-webmvc:6.1.14")
+  }
+}
+
+
 dependencyCheck {
   suppressionFiles.add("suppressions.xml")
 }
@@ -22,6 +77,9 @@ dependencyCheck {
 val awssdkVersion = "1.12.468"
 
 dependencies {
+  // or use:
+  compileOnly("jakarta.servlet:jakarta.servlet-api:6.0.0")
+
   annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
   implementation("org.slf4j:slf4j-simple:2.0.16")
@@ -32,19 +90,44 @@ dependencies {
   runtimeOnly("org.postgresql:postgresql:42.7.2")
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   implementation("org.springframework.boot:spring-boot-starter-cache")
-  implementation("org.springframework.boot:spring-boot-starter-security")
-  implementation("org.springframework.boot:spring-boot-starter-webflux")
-  implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-  implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+  implementation("org.springframework.boot:spring-boot-starter-security") {
+    exclude("org.springframework.security", "spring-security-core")
+    exclude("org.springframework.security", "spring-security-web")
+  }
+  implementation("org.springframework.security:spring-security-web:6.2.7")
+  implementation("org.springframework.security:spring-security-core:6.2.3")
+
+  implementation("org.springframework.boot:spring-boot-starter-webflux") {
+    exclude("org.springframework", "spring-webflux")
+  }
+  implementation("org.springframework:spring-webflux:6.1.14")
+
+  implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server") {
+    exclude("org.springframework.security", "spring-security-core")
+    exclude("org.springframework.security", "spring-security-web")
+  }
+  implementation("org.springframework.boot:spring-boot-starter-oauth2-client") {
+    exclude("org.springframework.security", "spring-security-core")
+    exclude("org.springframework.security", "spring-security-web")
+  }
 
   implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+  implementation("org.springframework.boot:spring-boot-starter-web") {
+    exclude("org.apache.tomcat.embed", "tomcat-embed-core")
+    exclude("org.apache.tomcat.embed", "tomcat-embed-websocket")
+    exclude("org.apache.tomcat.embed", "tomcat-embed-el")
+  }
+  implementation("org.apache.tomcat.embed", "tomcat-embed-core", "9.0.99")
+  implementation("org.apache.tomcat.embed", "tomcat-embed-websocket", "9.0.99")
+  implementation("org.apache.tomcat.embed", "tomcat-embed-el", "9.0.99")
 
   implementation("com.microsoft.azure:applicationinsights-spring-boot-starter:2.6.4")
   implementation("com.microsoft.azure:applicationinsights-logging-logback:2.6.4")
 
   // NOTE spring-boot-devtools does not currently play nicely with spring-data-redis,
   // see https://github.com/spring-projects/spring-boot/issues/11822, which claims to be fixed but is not.
-  //implementation("org.springframework.data:spring-data-redis")
+  // implementation("org.springframework.data:spring-data-redis")
   // Note spring-data-redis 2.6.2 does not support Jedis 4.x
   implementation("redis.clients:jedis:5.2.0")
 
@@ -57,12 +140,14 @@ dependencies {
 
   implementation("org.springdoc:springdoc-openapi-ui:1.6.15")
   implementation("org.springdoc:springdoc-openapi-kotlin:1.6.15")
-  implementation("org.springdoc:springdoc-openapi-security:1.6.15")
+  implementation("org.springdoc:springdoc-openapi-security:1.6.15") {
+    exclude(group = "org.springframework.security", module = "spring-security-core")
+  }
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
 
   implementation("io.jsonwebtoken:jjwt:0.12.3")
 
-  implementation("com.opencsv:opencsv:5.9")
+  implementation("com.opencsv:opencsv:5.10")
   implementation("commons-io:commons-io:2.16.1")
 
   implementation("org.apache.commons:commons-lang3:3.14.0")
@@ -84,9 +169,9 @@ dependencies {
 
   testImplementation("junit:junit:4.13.2")
   testImplementation("io.github.http-builder-ng:http-builder-ng-apache:1.0.4")
-  testImplementation("org.testcontainers:localstack:1.17.6")
+  testImplementation("org.testcontainers:localstack:1.20.6")
   testImplementation("com.github.tomakehurst:wiremock-standalone:2.27.2")
-  testImplementation("com.google.code.gson:gson:2.10.1")
+  testImplementation("com.google.code.gson:gson:2.11.0")
   testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
   testImplementation("org.awaitility:awaitility-kotlin:4.2.0")
 }

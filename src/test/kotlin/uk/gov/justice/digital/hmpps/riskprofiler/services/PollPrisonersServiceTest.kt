@@ -49,7 +49,7 @@ class PollPrisonersServiceTest {
         .withDateCreated(LocalDate.parse("2016-01-13"))
         .withActive(true)
         .withDateExpires(escapeAlertExpiryDate)
-        .build()
+        .build(),
     ),
     null,
   )

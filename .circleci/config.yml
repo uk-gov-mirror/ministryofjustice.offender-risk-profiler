@@ -133,12 +133,13 @@ workflows:
   security:
     triggers:
       - schedule:
-          cron: "16 3 * * 1-5"
+          cron: "00 10 * * *"
           filters:
             branches:
               only:
                 - main
                 - develop
+                - feature/SI-1647-vulnerabilities
     jobs:
       - hmpps/gradle_owasp_dependency_check:
           cache_key: "v2_0"
@@ -158,7 +159,7 @@ workflows:
   security-weekly:
     triggers:
       - schedule:
-          cron: "27 4 * * 1"
+          cron: "00 10 * * *"
           filters:
             branches:
               only:

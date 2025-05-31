@@ -61,7 +61,6 @@ class BatchHelperResource(
   @PreAuthorize("hasRole('RISK_PROFILER')")
   @PostMapping(path = ["/prison/{prisonId}"])
   fun addPrison(
-
     @Parameter(
       name = "prisonId",
       description = "Agency id of the prison",

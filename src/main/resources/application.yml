@@ -1,6 +1,6 @@
 info:
   app:
-     name: Offender Risk Profiler API
+    name: Offender Risk Profiler API
 
 # see https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html
 spring:

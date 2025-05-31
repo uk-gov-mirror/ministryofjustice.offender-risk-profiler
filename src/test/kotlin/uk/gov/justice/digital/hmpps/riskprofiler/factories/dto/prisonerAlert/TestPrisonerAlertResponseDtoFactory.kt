@@ -38,7 +38,7 @@ class TestPrisonerAlertResponseDtoFactory {
       this.createdAt,
       this.activeTo,
       this.activeFrom,
-      this.active
+      this.active,
     )
   }
 }
