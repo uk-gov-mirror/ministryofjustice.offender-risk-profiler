@@ -59,13 +59,13 @@ configurations.all {
 
 configurations.all {
   resolutionStrategy {
-    force("org.springframework:spring-web:6.1.5")
+    force("org.springframework:spring-web:6.1.6")
   }
 }
 
 configurations.all {
   resolutionStrategy {
-    force("org.springframework:spring-webflux:6.1.13")
+    force("org.springframework:spring-webflux:6.1.14")
   }
 }
 
