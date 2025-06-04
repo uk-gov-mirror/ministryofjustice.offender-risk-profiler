@@ -1,5 +1,5 @@
 plugins {
-  id("uk.gov.justice.hmpps.gradle-spring-boot") version "6.1.2"
+  id("uk.gov.justice.hmpps.gradle-spring-boot") version "5.15.6"
   kotlin("plugin.spring") version "1.9.22"
   kotlin("plugin.jpa") version "1.9.22"
 }
@@ -20,6 +20,61 @@ configurations.all {
     force("commons-beanutils:commons-beanutils:1.11.0")
   }
 }
+
+configurations.all {
+  resolutionStrategy {
+    force("org.apache.tomcat.embed:tomcat-embed-core:10.1.35")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.apache.tomcat.embed:tomcat-embed-core:11.0.3")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.springframework.boot:spring-boot:3.4.5")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.springframework.security:spring-security-core:6.2.3")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.springframework.security:spring-security-crypto:6.4.4")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.springframework.security:spring-security-web:6.2.7")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.springframework:spring-web:6.1.5")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.springframework:spring-webflux:6.1.13")
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.springframework:spring-webmvc:6.1.14")
+  }
+}
+
 
 dependencyCheck {
   suppressionFiles.add("suppressions.xml")
