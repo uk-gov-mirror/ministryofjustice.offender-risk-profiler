@@ -91,9 +91,14 @@ dependencies {
     exclude("org.springframework.security", "spring-security-core")
     exclude("org.springframework.security", "spring-security-web")
   }
+  implementation("org.springframework.security:spring-security-web:6.2.7")
+  implementation("org.springframework.security:spring-security-core:6.2.3")
+
   implementation("org.springframework.boot:spring-boot-starter-webflux") {
     exclude("org.springframework", "spring-webflux")
   }
+  implementation("org.springframework:spring-webflux:6.1.14")
+
   implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server") {
     exclude("org.springframework.security", "spring-security-core")
     exclude("org.springframework.security", "spring-security-web")
