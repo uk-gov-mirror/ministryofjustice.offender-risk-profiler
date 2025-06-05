@@ -21,11 +21,11 @@ configurations.all {
   }
 }
 
-configurations.all {
+/*configurations.all {
   resolutionStrategy {
     force("org.apache.tomcat.embed:tomcat-embed-core:11.0.3")
   }
-}
+}*/
 
 configurations.all {
   resolutionStrategy {
@@ -87,12 +87,32 @@ dependencies {
   runtimeOnly("org.postgresql:postgresql:42.7.2")
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   implementation("org.springframework.boot:spring-boot-starter-cache")
-  implementation("org.springframework.boot:spring-boot-starter-security")
-  implementation("org.springframework.boot:spring-boot-starter-webflux")
-  implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-  implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+  implementation("org.springframework.boot:spring-boot-starter-security") {
+    exclude("org.springframework.security", "spring-security-core")
+    exclude("org.springframework.security", "spring-security-web")
+  }
+  implementation("org.springframework.boot:spring-boot-starter-webflux") {
+    exclude("org.springframework", "spring-webflux")
+  }
+  implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server") {
+    exclude("org.springframework.security", "spring-security-core")
+    exclude("org.springframework.security", "spring-security-web")
+  }
+  implementation("org.springframework.boot:spring-boot-starter-oauth2-client") {
+    exclude("org.springframework.security", "spring-security-core")
+    exclude("org.springframework.security", "spring-security-web")
+  }
 
   implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+  implementation("org.springframework.boot:spring-boot-starter-web") {
+    exclude("org.apache.tomcat.embed", "tomcat-embed-core")
+    exclude("org.apache.tomcat.embed", "tomcat-embed-websocket")
+    exclude("org.apache.tomcat.embed", "tomcat-embed-el")
+  }
+  implementation("org.apache.tomcat.embed", "tomcat-embed-core", "11.0.3")
+  implementation("org.apache.tomcat.embed", "tomcat-embed-websocket", "11.0.3")
+  implementation("org.apache.tomcat.embed", "tomcat-embed-el", "11.0.3")
 
   implementation("com.microsoft.azure:applicationinsights-spring-boot-starter:2.6.4")
   implementation("com.microsoft.azure:applicationinsights-logging-logback:2.6.4")
@@ -112,7 +132,9 @@ dependencies {
 
   implementation("org.springdoc:springdoc-openapi-ui:1.6.15")
   implementation("org.springdoc:springdoc-openapi-kotlin:1.6.15")
-  implementation("org.springdoc:springdoc-openapi-security:1.6.15")
+  implementation("org.springdoc:springdoc-openapi-security:1.6.15") {
+    exclude(group = "org.springframework.security", module = "spring-security-core")
+  }
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
 
   implementation("io.jsonwebtoken:jjwt:0.12.3")
