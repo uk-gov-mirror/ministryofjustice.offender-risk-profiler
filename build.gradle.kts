@@ -77,6 +77,9 @@ dependencyCheck {
 val awssdkVersion = "1.12.468"
 
 dependencies {
+  // or use:
+  compileOnly("jakarta.servlet:jakarta.servlet-api:6.0.0")
+
   annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
   implementation("org.slf4j:slf4j-simple:2.0.16")
