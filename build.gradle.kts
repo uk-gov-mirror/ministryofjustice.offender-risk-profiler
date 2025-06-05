@@ -23,12 +23,6 @@ configurations.all {
 
 configurations.all {
   resolutionStrategy {
-    force("org.apache.tomcat.embed:tomcat-embed-core:10.1.35")
-  }
-}
-
-configurations.all {
-  resolutionStrategy {
     force("org.apache.tomcat.embed:tomcat-embed-core:11.0.3")
   }
 }
