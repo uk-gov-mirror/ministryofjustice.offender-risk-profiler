@@ -119,9 +119,9 @@ dependencies {
     exclude("org.apache.tomcat.embed", "tomcat-embed-websocket")
     exclude("org.apache.tomcat.embed", "tomcat-embed-el")
   }
-  implementation("org.apache.tomcat.embed", "tomcat-embed-core", "9.0.99")
-  implementation("org.apache.tomcat.embed", "tomcat-embed-websocket", "9.0.99")
-  implementation("org.apache.tomcat.embed", "tomcat-embed-el", "9.0.99")
+  implementation("org.apache.tomcat.embed", "tomcat-embed-core", "10.1.18")
+  implementation("org.apache.tomcat.embed", "tomcat-embed-websocket", "10.1.18")
+  implementation("org.apache.tomcat.embed", "tomcat-embed-el", "10.1.18")
 
   implementation("com.microsoft.azure:applicationinsights-spring-boot-starter:2.6.4")
   implementation("com.microsoft.azure:applicationinsights-logging-logback:2.6.4")
